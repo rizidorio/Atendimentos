@@ -1,0 +1,18 @@
+﻿#cardFinanceiro {
+    background-color: darkolivegreen;
+    color: white;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    background: rgba(0,0,0,0.2);
+    text-decoration: none;
+    color: white;
+}
+
+#wrapper li:hover {
+    background: rgba(0,0,0,0.2);
+}

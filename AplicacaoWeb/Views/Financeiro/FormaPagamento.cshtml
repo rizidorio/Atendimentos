@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FormaPagamento>
+@{ 
+    Layout = "_Layout";
+}
+
+<script>
+    $(document).ready( function () {
+        $('#formasPagamento').DataTable();
+    } );
+</script>
+
+<h4>Formas de pagamento</h4>
+<hr />
+<a class="btn btn-success mb-3 text-white" asp-action="NovaFormaPagamento" asp-controller="Financeiro">Nova forma de pagamento</a>
+
+<table id="formasPagamento" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+       @foreach (var formaPagamento in Model)
+       {
+        <tr>
+            <td>@formaPagamento.Codigo</td>
+            <td>@formaPagamento.Nome</td>
+            <td>
+                @if (@formaPagamento.Ativo)
+                {
+                    <span><i class="fas fa-check text-info"></i> Ativo</span>
+                }
+                else
+                {
+                    <span><i class="fas fa-times text-danger"></i> Inativo</span>
+                }
+            </td>
+            <td>
+                <a class="btn btn-primary" href="/Financeiro/EditarFormaPagamento/@formaPagamento.Codigo">
+                    <span><i class="far fa-edit"></i></span>
+                </a>
+                <form class="d-inline" asp-action="Remover" asp-controller="FormaPagamento">
+                    <input type="hidden" name="id" id="id" value="@formaPagamento.Codigo" />
+                    <button class="btn btn-danger">
+                        <i class="far fa-trash-alt"></i>
+                    </button>
+                </form>
+                
+            </td>
+        </tr>
+       }
+    </tbody>
+</table>

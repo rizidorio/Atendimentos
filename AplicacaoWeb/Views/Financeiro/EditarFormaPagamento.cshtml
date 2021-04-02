@@ -1,0 +1,36 @@
+﻿@model FormaPagamento;
+@{
+    Layout = "_Layout";
+}
+
+<h4>Editar forma de pagamento</h4>
+<hr />
+
+<form class="form-horizontal" method="POST" asp-action="Atualizar" asp-controller="FormaPagamento">
+    <label class="mb-0" asp-for="Codigo">Código</label>
+    <input id="txtCodigo" type="text" readonly asp-for="Codigo" class="form-control-plaintext mb-2 text-black-50" />
+    <span id="erroCodigo" asp-validation-for="Codigo"></span>
+
+    <label class="mb-0" asp-for="Nome">Nome</label>
+    <input id="txtNome" type="text" asp-for="Nome" class="form-control mb-2 text-dark" placeholder="Nome da forma de pagamento" />
+    <span id="erroNome" asp-validation-for="Nome"></span>
+
+    <label class="mb-0" asp-for="Ativo">Status</label>
+    <select class="form-control text-dark" asp-for="Ativo">
+        <option value="false">Inativo</option>
+        <option value="true">Ativo</option>
+    </select>
+
+    @if (TempData["Error"] is not null && TempData["Error"].ToString().StartsWith("Forma"))
+    {
+        <span class="alert alert-danger d-block mt-1 mb-1">@TempData["Error"].ToString()</span>
+    }
+
+    <button class="btn btn-success mt-2">Atualizar</button>
+</form>
+
+<script>
+    if (document.getElementById('erroNome').innerHTML != '') {
+        document.getElementById('erroNome').className = 'alert alert-danger d-block mt-1 mb-1'
+    }
+</script>

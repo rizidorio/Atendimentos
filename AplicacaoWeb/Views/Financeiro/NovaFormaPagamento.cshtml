@@ -1,0 +1,39 @@
+﻿@model FormaPagamento;
+@{
+    Layout = "_Layout";
+}
+
+<h4>Nova forma de pagamento</h4>
+<hr />
+
+<form class="form-horizontal" method="POST" asp-action="Salvar" asp-controller="FormaPagamento">
+    <label asp-for="Codigo">Código</label>
+    <input id="txtCodigo" type="text" asp-for="Codigo" class="form-control" placeholder="FP0000" />
+    <span id="erroCodigo" asp-validation-for="Codigo"></span>
+    
+    @if (TempData["Error"] is not null && TempData["Error"].ToString().StartsWith("Código"))
+    {
+        <span class="alert alert-danger d-block mt-1 mb-1">@TempData["Error"].ToString()</span>
+    }
+    <label asp-for="Nome">Nome</label>
+    <input id="txtNome" type="text" asp-for="Nome" class="form-control" placeholder="Nome da forma de pagamento" />
+    <span id="erroNome" asp-validation-for="Nome"></span>
+
+    @if (TempData["Error"] is not null && TempData["Error"].ToString().StartsWith("Forma"))
+    {
+        <span class="alert alert-danger d-block mt-1 mb-1">@TempData["Error"].ToString()</span>
+    }
+
+    <button class="btn btn-success mt-2">Cadastrar</button>
+</form>
+
+<script>
+    if (document.getElementById('erroCodigo').innerHTML != '') {
+        document.getElementById('erroCodigo').className = 'alert alert-danger d-block mt-1 mb-1'
+        document.getElementById('txtCodigo').focus()
+    }
+
+    if (document.getElementById('erroNome').innerHTML != '') {
+        document.getElementById('erroNome').className = 'alert alert-danger d-block mt-1 mb-1'
+    }
+</script>

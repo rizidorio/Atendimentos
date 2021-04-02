@@ -1,0 +1,31 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h3>Informações financeiras</h3>
+<div class="row">
+    <div class="col-xl-3 col-sm-6 mb-3">
+        <div id="cardFormaPagamento" class="card text-white bg-primary o-hidden h-100">
+            <div class="card-body">
+                <div class="card-body-icon">
+                    <i class="fas fa-fw fa-comments"></i>
+                </div>
+                <div class="mr-5">Formas de pagamento</div>
+            </div>
+            <div class="card-footer text-white clearfix small z-1 row">
+                <a class="float-left col-md-12">
+                    Cadastrar
+                    <span class="float-right">
+                        <i class="fas fa-angle-right"></i>
+                    </span>
+                </a>
+                <a class="float-left text-white col-md-12" asp-action="FormaPagamento" asp-controller="Financeiro">
+                    Mostrar todos
+                    <span class="float-right">
+                        <i class="fas fa-angle-right"></i>
+                    </span>
+                </a>
+            </div>            
+        </div>
+    </div>
+</div>
