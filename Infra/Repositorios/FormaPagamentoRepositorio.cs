@@ -16,9 +16,7 @@ namespace Infra.Repositorios
         {
             var formasPagamento = await ListarTodos();
 
-            var formaPagamento = formasPagamento.FirstOrDefault(fp => fp.Codigo.Equals(codigo, StringComparison.CurrentCultureIgnoreCase));
-
-            return formaPagamento;
+            return formasPagamento.FirstOrDefault(fp => fp.Codigo.Equals(codigo, StringComparison.CurrentCultureIgnoreCase));
         }
     }
 }

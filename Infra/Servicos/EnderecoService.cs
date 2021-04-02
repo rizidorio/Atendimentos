@@ -33,7 +33,6 @@ namespace Infra.Servicos
                 {
                     return enderecos.Where(e => e.Bairro.Equals(bairro)).Select(endereco => new EnderecoDto
                     {
-                        Id = endereco.Id,
                         Cep = endereco.Cep,
                         Logradouro = endereco.Logradouro,
                         Bairro = endereco.Bairro,
@@ -60,7 +59,6 @@ namespace Infra.Servicos
                 {
                     return enderecos.Where(e => e.Localidade.Equals(Cidade)).Select(endereco => new EnderecoDto
                     {
-                        Id = endereco.Id,
                         Cep = endereco.Cep,
                         Logradouro = endereco.Logradouro,
                         Bairro = endereco.Bairro,
@@ -87,7 +85,6 @@ namespace Infra.Servicos
                 {
                     return enderecos.Select(endereco => new EnderecoDto
                     {
-                        Id = endereco.Id,
                         Cep = endereco.Cep,
                         Logradouro = endereco.Logradouro,
                         Bairro = endereco.Bairro,
@@ -104,24 +101,13 @@ namespace Infra.Servicos
             }
         }
 
-        public async Task<EnderecoDto> PegarPorId(int id)
+        public async Task<EnderecoDto> PegarPorCep(string cep)
         {
             try
             {
-                var endereco = await _repositorio.BuscarPorId(id);
+                var enderecos = await ListarTodos();
 
-                if (endereco is null)
-                    throw new Exception("Endereço não encontrado.");
-
-                return new EnderecoDto
-                {
-                    Id = endereco.Id,
-                    Cep = endereco.Cep,
-                    Logradouro = endereco.Logradouro,
-                    Bairro = endereco.Bairro,
-                    Localidade = endereco.Localidade,
-                    Uf = endereco.Uf,
-                };
+                return enderecos.FirstOrDefault(e => e.Cep.Equals(cep));
             }
             catch (Exception)
             {
@@ -129,11 +115,11 @@ namespace Infra.Servicos
             }
         }
 
-        public async Task Remover(int id)
+        public async Task Remover(string cep)
         {
             try
             {
-                var endereco = await _repositorio.BuscarPorId(id);
+                var endereco = await _repositorio.PegarPorCep(cep);
 
                 if (endereco is null)
                     throw new Exception("Endereco não encontrado.");
@@ -150,17 +136,17 @@ namespace Infra.Servicos
         {
             try
             {
-                Endereco endereco = new(enderecoDto.Id, enderecoDto.Cep, enderecoDto.Logradouro, enderecoDto.Bairro, enderecoDto.Localidade, enderecoDto.Uf);
+                Endereco endereco = await _repositorio.PegarPorCep(enderecoDto.Cep);
                 Endereco resultado;
 
-                if (enderecoDto.Id.Equals(0))
+                if (endereco is null)
                 {
+                    endereco = new(enderecoDto.Cep, enderecoDto.Logradouro, enderecoDto.Bairro, enderecoDto.Localidade, enderecoDto.Uf);
+
                     resultado = await _repositorio.Adicionar(endereco);
 
                     if (resultado is null)
                         throw new Exception("Erro ao cadastrar, contate o administrador do sistema.");
-                    else
-                        enderecoDto.Id = resultado.Id;
 
                     return enderecoDto;
                 }

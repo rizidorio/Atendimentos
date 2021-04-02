@@ -9,10 +9,8 @@ namespace Dominio.Interfaces.Servicos
     {
         Task<FormaPagamentoDto> Salvar(FormaPagamentoDto formaPagamentoDto);
         Task Remover(string id);
-        Task<FormaPagamentoDto> PegarPorId(int id);
-        Task<FormaPagamentoDto> PegarPorCodigo(string codgio);
+        Task<FormaPagamentoDto> PegarPorCodigo(string codigo);
         Task<IEnumerable<FormaPagamentoDto>> ListarTodos();
-        Task<IEnumerable<FormaPagamentoDto>> ListarSomenteAtivo();
         Task<bool> JaExiste(string nome, string codigo);
     }
 }

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace AplicacaoWeb
 {
-    public class Program
+    public static class Program
     {
-        public static string formaPagamentoApi = "https://localhost:5001/api/FormaPagamento";
+        public static string formaPagamentoApi = "https://localhost:5001/api/FormasPagamento";
         public static void Main(string[] args)
         {
             CreateHostBuilder(args).Build().Run();

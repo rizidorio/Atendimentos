@@ -45,25 +45,6 @@ namespace Infra.Servicos
             }
         }
 
-        public async Task<IEnumerable<FormaPagamentoDto>> ListarSomenteAtivo()
-        {
-            try
-            {
-                var formasPagamento = await ListarTodos();
-
-                return formasPagamento.Where(i => i.Ativo).Select(formaPagamento => new FormaPagamentoDto
-                {
-                    Codigo = formaPagamento.Codigo,
-                    Nome = formaPagamento.Nome,
-                    Ativo = formaPagamento.Ativo,
-                });
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public async Task<IEnumerable<FormaPagamentoDto>> ListarTodos()
         {
             var formasPagamento = await _repositorio.ListarTodos();
@@ -85,24 +66,7 @@ namespace Infra.Servicos
         {
             var formasPagamento = await ListarTodos();
 
-            FormaPagamentoDto formaPagamento = formasPagamento.FirstOrDefault(fp => fp.Codigo.Equals(codgio, StringComparison.CurrentCultureIgnoreCase));
-
-            return formaPagamento;
-        }
-
-        public async Task<FormaPagamentoDto> PegarPorId(int id)
-        {
-            var formaPagamento = await _repositorio.BuscarPorId(id);
-
-            if (formaPagamento is null)
-                throw new Exception("Forma de pagamento não encontrada.");
-
-            return new FormaPagamentoDto
-            {
-                Codigo = formaPagamento.Codigo,
-                Nome = formaPagamento.Nome,
-                Ativo = formaPagamento.Ativo
-            };
+            return formasPagamento.FirstOrDefault(fp => fp.Codigo.Equals(codgio, StringComparison.CurrentCultureIgnoreCase));
         }
 
         public async Task Remover(string codigo)

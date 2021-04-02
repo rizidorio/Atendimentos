@@ -12,9 +12,8 @@
         private Endereco()
         { }
 
-        public Endereco(int id, string cep, string logradouro, string bairro, string localidade, string uf)
+        public Endereco(string cep, string logradouro, string bairro, string localidade, string uf)
         {
-            Id = id;
             Cep = cep;
             Logradouro = logradouro;
             Bairro = bairro;

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/FormasPagamento")]
-    public class FormaPagamentoController : ControllerBase
+    [Route("api/enderecos")]
+    public class EnderecoController : ControllerBase
     {
-        private readonly IFormaPagamentoService _service;
+        private readonly IEnderecoService _service;
 
-        public FormaPagamentoController(IFormaPagamentoService service)
+        public EnderecoController(IEnderecoService service)
         {
             _service = service;
         }
@@ -21,9 +21,9 @@ namespace API.Controllers
         {
             try
             {
-                var formasPagamento = await _service.ListarTodos();
+                var enderecos = await _service.ListarTodos();
 
-                return Ok(formasPagamento);
+                return Ok(enderecos);
             }
             catch (Exception ex)
             {
@@ -31,14 +31,14 @@ namespace API.Controllers
             }
         }
 
-        [HttpGet("{codigo}")]
-        public async Task<IActionResult> GetByCodigo(string codigo)
+        [HttpGet("{cep}")]
+        public async Task<IActionResult> GetByCep(string cep)
         {
             try
             {
-                var formaPagamento = await _service.PegarPorCodigo(codigo);
+                var endereco = await _service.PegarPorCep(cep);
 
-                return Ok(formaPagamento);
+                return Ok(endereco);
             }
             catch (Exception ex)
             {
@@ -47,12 +47,13 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] FormaPagamentoDto formaPagamentoDto)
+        public async Task<IActionResult> Post([FromBody] EnderecoDto enderecoDto)
         {
             try
             {
-                var resultado = await _service.Salvar(formaPagamentoDto);
-                return CreatedAtAction(nameof(GetByCodigo), new { codigo = resultado.Codigo }, formaPagamentoDto);
+                var resultado = await _service.Salvar(enderecoDto);
+                return CreatedAtAction(nameof(GetByCep), new { cep = resultado.Cep }, enderecoDto);
+
             }
             catch (Exception ex)
             {
@@ -61,19 +62,21 @@ namespace API.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody] FormaPagamentoDto formaPagamentoDto)
+        public async Task<IActionResult> Put([FromBody] EnderecoDto enderecoDto)
         {
             try
             {
-                var formaPagamento = await _service.PegarPorCodigo(formaPagamentoDto.Codigo);
+                var endereco = await _service.PegarPorCep(enderecoDto.Cep);
 
-                if (formaPagamento is null)
+                if (endereco is null)
                     return NotFound();
 
-                formaPagamento.Nome = formaPagamentoDto.Nome;
-                formaPagamento.Ativo = formaPagamentoDto.Ativo;
+                endereco.Logradouro = enderecoDto.Logradouro;
+                endereco.Bairro = enderecoDto.Bairro;
+                endereco.Localidade = enderecoDto.Localidade;
+                endereco.Uf = enderecoDto.Uf;
 
-                await _service.Salvar(formaPagamento);
+                await _service.Salvar(endereco);
 
                 return NoContent();
             }

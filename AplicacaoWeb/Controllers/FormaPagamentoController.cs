@@ -19,7 +19,6 @@ namespace AplicacaoWeb.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //formaPagamento.Ativo = true;
                     using var client = new HttpClient();
 
                     var formaPagamentoJson = JsonConvert.SerializeObject(formaPagamento);
