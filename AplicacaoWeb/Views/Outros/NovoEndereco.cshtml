@@ -1,0 +1,42 @@
+﻿@model Endereco;
+@{
+    Layout = "_Layout";
+}
+
+<h4>Nova forma de pagamento</h4>
+<hr />
+
+<form class="form-horizontal" method="POST">
+    <label asp-for="Cep">CEP</label>
+    <input id="txtCodigo" type="text" asp-for="Cep" class="form-control" placeholder="CEP" />
+    <span id="erroCep" asp-validation-for="Cep"></span>
+    <a class="btn btn-secondary">
+        <i class="fas fa-search"></i>
+    </a>
+
+    @if (TempData["Error"] is not null && TempData["Error"].ToString().StartsWith("Código"))
+    {
+        <span class="alert alert-danger d-block mt-1 mb-1">@TempData["Error"].ToString()</span>
+    }
+    <label asp-for="Logradouro">Logradouro</label>
+    <input id="txtNome" type="text" asp-for="Logradouro" class="form-control" placeholder="Logradouro" />
+    <span id="erroLogradouro" asp-validation-for="Logradouro"></span>
+
+    @if (TempData["Error"] is not null && TempData["Error"].ToString().StartsWith("Forma"))
+    {
+        <span class="alert alert-danger d-block mt-1 mb-1">@TempData["Error"].ToString()</span>
+    }
+
+    <button class="btn btn-success mt-2">Cadastrar</button>
+</form>
+
+@*<script>
+    if (document.getElementById('erroCodigo').innerHTML != '') {
+        document.getElementById('erroCodigo').className = 'alert alert-danger d-block mt-1 mb-1'
+        document.getElementById('txtCodigo').focus()
+    }
+
+    if (document.getElementById('erroNome').innerHTML != '') {
+        document.getElementById('erroNome').className = 'alert alert-danger d-block mt-1 mb-1'
+    }
+</script>*@
